@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <pcap.h>
+
+void packet_capture(u_char *args, const struct pcap_pkthdr *header, const u_char *packet){
+    
+    struct ethheader *eth = (struct ethheader *)packet;
+    struct ipheader *ip = (struct ipheader *)(packet + sizeof(struct ethheader));
+    struct tcpheader *tcp = (struct tcpheader *)(packet + sizeof(struct ethheader) + ip->iph_ihl * 4)
+
+    printf("Src Mac: %s\n", inet_ntoa(eth->ether_shost));
+    printf("Dst Mac: %s\n", inet_ntoa(eth->ether_dhost));
+
+    printf("Src IP: %s\n", inet_ntoa(ip->iph_sourceip));
+    printf("Dst IP: %s\n", inet_ntoa(ip->iph_destip));
+
+    printf("Src Port: %s\n", inet_ntoa(tcp->tcp_sport));
+    printf("Dst Port: %s\n", inet_ntoa(tcp->tcp_dport));
+
+    printf("Got a packet\n")
+}
